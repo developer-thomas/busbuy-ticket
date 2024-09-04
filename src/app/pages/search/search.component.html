@@ -80,6 +80,8 @@
   <!-- Buses List -->
   <section id="buses-list" class="my-4">
     <h2>Available Buses</h2>
+
+    @for(item of busList; track $index) {
     <div class="row">
       <div class="col-12">
         <div class="card mb-3">
@@ -87,34 +89,60 @@
             <div
               class="col-md-3 d-flex flex-column justify-content-center align-items-center"
             >
-              <h5 class="card-title">IntrCity SmartBus</h5>
-              <p class="card-text">A/C Sleeper (2+1)</p>
+              <h5 class="card-title">{{ item.busName }}</h5>
+              <p class="card-text">{{ item.vendorName }}</p>
             </div>
             <div class="col-md-9">
               <div class="card-body row">
                 <div class="col-md-2">
-                  <p class="card-text"><strong>19:00</strong></p>
+                  <p class="card-text">
+                    <strong>
+                      {{ item.departureTime | date : "hh:mm" }}
+                    </strong>
+                  </p>
                   <p class="card-text">Departure</p>
                 </div>
                 <div class="col-md-2">
-                  <p class="card-text"><strong>13h 55m</strong></p>
+                  <p class="card-text">
+                    <strong>
+                      {{ item.departureTime | date : "hh:mm" }}
+                    </strong>
+                  </p>
                   <p class="card-text">Duration</p>
                 </div>
                 <div class="col-md-2">
-                  <p class="card-text"><strong>08:55</strong></p>
+                  <p class="card-text">
+                    <strong>
+                      {{ item.arrivalTime | date : "hh:mm" }}
+                    </strong>
+                  </p>
                   <p class="card-text">Arrival</p>
-                  <p class="text-danger">18-Aug</p>
+                  <p class="text-danger">
+                    {{ item.arrivalTime | date : "dd:MM:yyyy" }}
+                  </p>
                 </div>
                 <div class="col-md-2">
                   <p class="card-text"><strong>4.5</strong> ⭐</p>
                   <p class="card-text">567 Ratings</p>
                 </div>
                 <div class="col-md-2">
-                  <p class="card-text"><strong>INR 935</strong></p>
-                  <p class="card-text">8 Seats available</p>
+                  <p class="card-text">
+                    <strong>
+                      {{ item.price | currency : "USD" }}
+                    </strong>
+                  </p>
+                  <p class="card-text">
+                    {{ item.availableSeats }} Seats Available Out of
+                    {{ item.totalSeats }}
+                  </p>
                 </div>
                 <div class="col-md-2 text-end">
-                  <button class="btn btn-danger">VIEW SEATS</button>
+                  <button
+                    class="btn btn-danger"
+                    [routerLink]="['/booking/', item.scheduleId]"
+                  >
+                    Book Seat
+                  </button>
                 </div>
               </div>
             </div>
@@ -122,5 +150,6 @@
         </div>
       </div>
     </div>
+    }
   </section>
 </div>
